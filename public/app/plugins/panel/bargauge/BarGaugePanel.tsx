@@ -17,6 +17,8 @@ export class BarGaugePanel extends PureComponent<PanelProps<BarGaugeOptions>> {
     const { options } = this.props;
     const { field, display } = value;
 
+    const maxValue = typeof field.max === 'number' ? field.max : this.getMaxValue();
+
     return (
       <DataLinksContextMenu links={getFieldLinksSupplier(value)}>
         {({ openMenu, targetClassName }) => {
@@ -31,7 +33,7 @@ export class BarGaugePanel extends PureComponent<PanelProps<BarGaugeOptions>> {
               itemSpacing={this.getItemSpacing()}
               displayMode={options.displayMode}
               minValue={field.min}
-              maxValue={field.max}
+              maxValue={maxValue}
               onClick={openMenu}
               className={targetClassName}
             />
@@ -58,6 +60,13 @@ export class BarGaugePanel extends PureComponent<PanelProps<BarGaugeOptions>> {
 
     return 10;
   }
+
+  getMaxValue = (): number => (
+    this.getValues().reduce(
+      (maxResult, d) => (d.display.numeric <= maxResult ? maxResult : Math.ceil(Number(d.display.text))),
+      -Infinity
+    )
+  )
 
   render() {
     const { height, width, options, data, renderCounter } = this.props;
