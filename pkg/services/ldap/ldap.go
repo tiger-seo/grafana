@@ -140,7 +140,9 @@ func (server *Server) Dial() error {
 
 // Close closes the LDAP connection
 func (server *Server) Close() {
-	server.Connection.Close()
+	if server.Connection != nil {
+		server.Connection.Close()
+	}
 }
 
 // Login the user.
