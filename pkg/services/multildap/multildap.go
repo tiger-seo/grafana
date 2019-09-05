@@ -85,6 +85,7 @@ func (multiples *MultiLDAP) Ping() ([]*ServerStatus, error) {
 		if err == nil {
 			status.Available = true
 			serverStatuses = append(serverStatuses, status)
+			server.Close()
 		} else {
 			status.Available = false
 			status.Error = err
