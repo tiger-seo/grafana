@@ -307,6 +307,7 @@ export interface ExploreQueryFieldProps<
 }
 
 export interface ExploreStartPageProps {
+  datasource?: DataSourceApi;
   onClickExample: (query: DataQuery) => void;
 }
 
